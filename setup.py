@@ -5,12 +5,16 @@ from setuptools import setup, find_packages
 def install_package(package):
     subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
 
+# Check for the '--with-audio' argument and handle it
+with_audio = False
 if "--with-audio" in sys.argv:
-    install_package('opencv-python')
-    install_package('pyaudio')
+    with_audio = True
     sys.argv.remove("--with-audio")
-else:
-    install_package('opencv-python')
+
+# Install required packages
+install_package('opencv-python')
+if with_audio:
+    install_package('pyaudio')
 
 setup(
     name="video_to_ascii",
