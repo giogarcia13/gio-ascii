@@ -1,17 +1,9 @@
 import sys
+import subprocess
 from setuptools import setup, find_packages
-from setuptools.command.install import install
-from setuptools.command.develop import develop
-from setuptools.command.egg_info import egg_info
 
 def install_package(package):
-    import pip
-    try:
-        from pip._internal import main
-        main.main(['install', package])
-    except AttributeError:
-        from pip import __main__
-        __main__._main(['install', package])
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
 
 if "--with-audio" in sys.argv:
     install_package('opencv-python')
